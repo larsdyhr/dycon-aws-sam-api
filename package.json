@@ -1,12 +1,17 @@
 {
-    "name": "@dycon/db-helper2",
+    "name": "@dycon/sam-sogn-api-helpers",
     "description": "DB helpers for Sogn SAM AWS API",
-    "version": "0.0.7",
+    "version": "0.0.9",
     "private": true,
     "type":"module",
     "main": "index.mjs",
     "dependencies": {
-        "mysql2": "^3.2.0"
+        "mysql2": "^3.2.0",
+        "node-fetch": "^3.3.2",
+        "node-libxml": "^5.0.6",
+        "md5": "^2.3.0",
+        "html-entities": "^2.5.2",
+        "module": "^1.2.5"
     },
     "scripts": {
     }
