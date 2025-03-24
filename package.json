@@ -1,7 +1,7 @@
 {
     "name": "@dycon/db-helper2",
     "description": "DB helpers for Sogn SAM AWS API",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "private": true,
     "type":"module",
     "main": "index.mjs",
