@@ -21,7 +21,7 @@ const pool = mysql.createPool({
 });
 
 
-export const execute = async (sql, params) => {
+export const execute2 = async (sql, params) => {
 	let res = [];
 	try {
 		[res,] = await pool.execute(sql, params);
