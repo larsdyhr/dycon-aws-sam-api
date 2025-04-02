@@ -3,7 +3,7 @@ import {Libxml} from 'node-libxml';
 import {encode} from 'html-entities';
 import xss from 'xss'; // CommonJS package
 
-let libxml = new Libxml();
+// let locallibxml = new Libxml();
 
 // const mysql = require('mysql2/promise');
 
