@@ -12,7 +12,7 @@ import xss from 'xss'; // CommonJS package
 //"Try calling con.promise().query(), or require('mysql2/promise') instead of 'mysql2' for a promise-compatible version of the query interface. " +
 //"To learn how to use async/await or Promises check out documentation at https://sidorares.github.io/node-mysql2/docs#using-promise-wrapper, or the mysql2 documentation at https://sidorares.github.io/node-mysql2/docs/documentation/promise-wrapper";
 // eslint-disable-next-line
-const pool = mysql.createPool({
+export const pool2 = mysql.createPool({
 	host     : process.env.HOST_NAME,
 	user     : process.env.USER_NAME,
 	password : process.env.DB_PASSWORD,
@@ -25,14 +25,24 @@ const pool = mysql.createPool({
 	queueLimit: 0,
 	enableKeepAlive: true,
 	keepAliveInitialDelay: 0,
-	rowsAsArray: true
+	rowsAsArray: true,
+	namedPlaceholders: true
 });
 
 
 export const execute2 = async (sql, params) => {
 	let res = [];
 	try {
-		[res,] = await pool.execute(sql, params);
+		[res,] = await pool2.execute(sql, params);
+	} catch (err) {
+		console.log(err);
+	}
+	return res;
+}
+export const format2 = (sql, params) => {
+	let res = [];
+	try {
+		[res,] = mysql.format(sql, params);
 	} catch (err) {
 		console.log(err);
 	}
@@ -58,6 +68,13 @@ export const creupdate = async (libxml, data, recid = null) =>
 	let sted = '';
 	let start = libxml.xpathSelect('//tidspunkt-start');
 	let praedikant  = libxml.xpathSelect('//praedikant');
+
+
+	let gudstjeneste = ['sogn','type','tidspunkt-start','tidspunkt-slut','ingen-sluttid','praest','praedikant','overskrift','kirke','sted','beskrivelse','abstract','link','slettet','oprettet','redigeret','deltagere','konfirmationer','daab','kommentar','modtager','online','dawaid'];
+	let arrangement = ['sogn','kategori','tidspunkt-start','tidspunkt-slut','ingen-sluttid','overskrift','kirke','sted','beskrivelse', 'abstract','link','slettet','oprettet','redigeret', 'deltagere', 'konfirmationer', 'daab','kommentar','modtager','online','dawaid','opencommunity'];
+	let elementsWithIdAttrib = ['sogn','praest','kirke','sted'];
+	let topRootName = libxml.xpathSelect('name(/*)');
+
 
 	console.log("praedikant og start", praedikant, start);
 return true;
