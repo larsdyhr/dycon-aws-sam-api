@@ -62,6 +62,47 @@ export const format2 = (sql, params) => {
 module.exports = execute2
 */
 
+/**
+ * 	Response for most integrations according to the default DTD:
+ * 	https://sogn.dk/api/dtd/defaultreply.dtd
+ * 	svar (kode,besked, forklaring?, result?,gudstjeneste?,arrangement?)
+ * @param kode
+ * @param besked
+ * @param forklaring
+ * @param gudstjenesteid
+ * @param arrangementsid
+ * @param statusCode
+ * @param headers
+ * @returns {{}}
+ */
+export const generateResponse = (kode, besked, forklaring, gudstjenesteid, arrangementsid, statusCode = 403, headers = {"content-type": "application/xml"}) => {
+	// Required output:
+	let integrationResponse = {};
+	integrationResponse.statusCode = statusCode;
+	integrationResponse.headers = headers;
+	integrationResponse.body = '<?xml version="1.0" encoding="UTF-8"?>' +
+		'<!DOCTYPE svar PUBLIC "-//SOGN.DK//DTD XML 1.0//DA" "https://sogn.dk/api/dtd/defaultreply.dtd">' +
+		'<svar xmlns="https://sogn.dk/api/dtd/defaultreply.dtd">';
+	if(kode) {
+		integrationResponse.body += "\n\t<kode>" + kode + "</kode>";
+	}
+	if(besked) {
+		integrationResponse.body += "\n\t<besked>" + kode + "</besked>";
+	}
+	if(forklaring) {
+		integrationResponse.body += `\n\t<forklaring>${kode}</forklaring>`;
+	}
+	if(gudstjenesteid) {
+		integrationResponse.body += `\n\t<gudstjeneste id="${gudstjenesteid}" />`;
+	}
+	if(arrangementsid) {
+		integrationResponse.body += `\n\t<arrangement id="${arrangementsid}" />`;
+	}
+	integrationResponse.body += `</svar>`;
+	return integrationResponse;
+}
+
+
 export const creupdate = async (libxml, data, recid = null) =>
 {
 	// $data = $this->validateParseXML($data);
