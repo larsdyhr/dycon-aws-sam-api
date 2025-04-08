@@ -39,7 +39,7 @@ export const execute2 = async (sql, params) => {
 	}
 	return res;
 }
-export const format2 = (sql, params) => {
+export function format2 (sql, params) {
 	let res = [];
 	try {
 		[res,] = mysql.format(sql, params);
@@ -75,7 +75,7 @@ module.exports = execute2
  * @param headers
  * @returns {{}}
  */
-export const generateResponse = (kode, besked, forklaring, gudstjenesteid, arrangementsid, statusCode = 403, headers = {"content-type": "application/xml"}) => {
+export function generateResponse(kode, besked, forklaring, gudstjenesteid, arrangementsid, statusCode = 403, headers = {"content-type": "application/xml"}) {
 	// Required output:
 	let integrationResponse = {};
 	integrationResponse.statusCode = statusCode;
@@ -84,10 +84,10 @@ export const generateResponse = (kode, besked, forklaring, gudstjenesteid, arran
 		'<!DOCTYPE svar PUBLIC "-//SOGN.DK//DTD XML 1.0//DA" "https://sogn.dk/api/dtd/defaultreply.dtd">' +
 		'<svar xmlns="https://sogn.dk/api/dtd/defaultreply.dtd">';
 	if(kode) {
-		integrationResponse.body += "\n\t<kode>" + kode + "</kode>";
+		integrationResponse.body += `\n\t<kode>${kode}</kode>`;
 	}
 	if(besked) {
-		integrationResponse.body += "\n\t<besked>" + kode + "</besked>";
+		integrationResponse.body += `\n\t<besked>${kode}</besked>`;
 	}
 	if(forklaring) {
 		integrationResponse.body += `\n\t<forklaring>${kode}</forklaring>`;
@@ -98,7 +98,7 @@ export const generateResponse = (kode, besked, forklaring, gudstjenesteid, arran
 	if(arrangementsid) {
 		integrationResponse.body += `\n\t<arrangement id="${arrangementsid}" />`;
 	}
-	integrationResponse.body += `</svar>`;
+	integrationResponse.body += `\n</svar>`;
 	return integrationResponse;
 }
 
