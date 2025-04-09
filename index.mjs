@@ -55,7 +55,7 @@ export const mysql2query = async (sql, params) => {
 export function mysql2format (sql, params) {
 	let res = [];
 	try {
-		[res,] = mysql.format(sql, params);
+		[res,] = mysql2pool.format(sql, params);
 	} catch (err) {
 		console.log(err);
 	}
