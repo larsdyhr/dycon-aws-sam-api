@@ -25,7 +25,7 @@ export const mysql2pool = mysql.createPool({
 	queueLimit: 0,
 	enableKeepAlive: true,
 	keepAliveInitialDelay: 0,
-	rowsAsArray: true,
+	rowsAsArray: false,
 	namedPlaceholders: true
 });
 
@@ -77,7 +77,7 @@ export function mysql2format (sql, params) {
  * @param headers
  * @returns {{}}
  */
-export function generateResponse(kode, besked, forklaring, gudstjenesteid, arrangementsid, statusCode = 403, headers = {"content-type": "application/xml"}) {
+export function generateResponse(kode, besked, forklaring, gudstjenesteid, arrangementsid, statusCode = 400, headers = {"content-type": "application/xml"}) {
 	// Required output:
 	let integrationResponse = {};
 	integrationResponse.statusCode = statusCode;
