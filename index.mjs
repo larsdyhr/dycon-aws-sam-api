@@ -29,6 +29,31 @@ export const mysql2pool = mysql.createPool({
 	namedPlaceholders: true
 });
 
+export var mysql2connection = null;
+
+export const mysql2connect = () => {
+	return mysql2pool.getConnection().then(function(connection) {
+		mysql2connection = connection;
+		return mysql2connection;
+	}).catch(function(error) {
+		console.log("Connect failed", error);
+	}).finally(function() {
+		if (connection) {
+			mysql2pool.releaseConnection(connection);
+			// connection.connection.release();
+		}
+	});
+}
+
+export const mysql2connectpromise = async () => {
+	try {
+		mysql2connection = await mysql2pool.getConnection();
+		return mysql2connection;
+	} catch (err) {
+		console.log(err);
+	}
+}
+
 
 export const mysql2execute = async (sql, params) => {
 	let res = [];
